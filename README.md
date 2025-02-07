@@ -14,10 +14,10 @@ From the countdown tasks, running on 2x A100 80GB for xx steps, the experiment l
 
 Thanks to lichess.org for maintaining the chess puzzle database! Here's how you'd prepare the endgame dataset for training:
 
-1. cd data
-1. wget https://database.lichess.org/lichess_db_puzzle.csv.zst
-1. unzstd lichess_db_puzzle.csv.zst
-1. poetry run python chess_endgame.py
+1. `cd data`
+1. `wget https://database.lichess.org/lichess_db_puzzle.csv.zst`
+1. `unzstd lichess_db_puzzle.csv.zst`
+1. `poetry run python chess_endgame.py`
 
 ## Chess Endgame Training
 
