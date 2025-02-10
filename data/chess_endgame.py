@@ -14,7 +14,7 @@ def build_prompt(dp):
         {"role": "system", "content": "You are a helpful assistant. You first think about applying a reasoning process then provide the user with the answer."},
         {
             "role": "user",
-            "content": f"You are a chess grandmaster. For this board configuration in FEN: {puzzle}, calculate the next move that will lead to checkmate, and tell me the move in UCI. Show your work in <think> </think> tags. Show your final answer in <answer> </answer> tag, for example <answer>b3b4</answer>",
+            "content": f"You are a chess grandmaster. For this board configuration in FEN: {puzzle}, calculate the next move that will lead to checkmate, and tell me the move in UCI. Put your thought process in <think> </think> tag. Show your final answer in <answer> </answer> tag, for example <answer>b3b4</answer>",
         },
         {"role": "assistant", "content": "Let me solve this step by step. <think>"},
     ]

@@ -20,7 +20,7 @@ def build_prompt(dp):
         {"role": "system", "content": "You are a helpful assistant. You first think about applying a reasoning process then provide the user with the answer."},
         {
             "role": "user",
-            "content": f"Using the numbers {numbers}, create an equation that equals {target}. You can use basic arithmetic operations (+, -, *, /) and each number can only be used once. Show your work in <think> </think> tags. And return the final answer in <answer> </answer> tags, for example <answer> (1 + 2) / 3 </answer>",
+            "content": f"Using the numbers {numbers}, create an equation that equals {target}. You can use basic arithmetic operations (+, -, *, /) and each number can only be used once. Put your thought process in <think> </think> tag. Show the final answer in <answer> </answer> tag, for example <answer> (1 + 2) / 3 </answer>",
         },
         {"role": "assistant", "content": "Let me solve this step by step. <think>"},
     ]
