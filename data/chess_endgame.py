@@ -8,21 +8,16 @@ import pandas as pd
 from datasets import Dataset
 
 
-def make_prompt(dp, template_type="base"):
-    """
-    Make a prompt for the puzzle, supports instruct and non-instruct models.
-    """
+def build_prompt(dp):
     puzzle = dp["puzzle"]
-    if template_type == "base":
-        """This works for any base model"""
-        prefix = f"""A conversation between User and Assistant. The user asks a question, and the Assistant solves it. The assistant first thinks about the reasoning process in the mind and then provides the user with the answer.
-User: You are a chess grandmaster. For this board configuration in FEN: {puzzle}, calculate the next move that will lead to checkmate, and tell me the move in UCI. Show your work in <think> </think> tags. Show your final answer in <answer> </answer> tag, for example <answer>b3b4</answer>.
-Assistant: Let me solve this step by step.
-<think>"""
-    elif template_type == "qwen-instruct":
-        """This works for Qwen Instruct Models"""
-        prefix = f"""<|im_start|>system\nYou are a chess grandmaster. You first thinks about the reasoning process in the mind and then provides the user with the answer.<|im_end|>\n<|im_start|>user\n For this board configuration in FEN: {puzzle}, calculate the next move that will lead to checkmate, and tell me the move in UCI. Show your work in <think> </think> tags. Show your final answer in <answer> </answer> tag, for example <answer>b3b4</answer>.<|im_end|>\n<|im_start|>assistant\nLet me solve this step by step.\n<think>"""
-    return prefix
+    return [
+        {"role": "system", "content": "You are a helpful assistant. You first think about applying a reasoning process then provide the user with the answer."},
+        {
+            "role": "user",
+            "content": f"You are a chess grandmaster. For this board configuration in FEN: {puzzle}, calculate the next move that will lead to checkmate, and tell me the move in UCI. Show your work in <think> </think> tags. Show your final answer in <answer> </answer> tag, for example <answer>b3b4</answer>",
+        },
+        {"role": "assistant", "content": "Let me solve this step by step."},
+    ]
 
 
 def search_mates(df, themes=None, min_move_count=4, max_move_count=8):
@@ -91,10 +86,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--local_dir", default="./chess")
     parser.add_argument("--lichess_db_path", default="./lichess_db_puzzle.csv")
-    parser.add_argument("--num_samples", type=int, default=100000)
     parser.add_argument("--train_size", type=int, default=327680)
     parser.add_argument("--test_size", type=int, default=1024)
-    parser.add_argument("--template_type", type=str, default="base")
 
     args = parser.parse_args()
 
@@ -110,16 +103,11 @@ if __name__ == "__main__":
 
     def make_map_fn(split):
         def process_fn(example, idx):
-            question = make_prompt(example, template_type="base")
+            prompt = build_prompt(example)
             solution = {"puzzle": example["puzzle"], "solution": example["solution"]}
             data = {
                 "data_source": "chess_endgame",
-                "prompt": [
-                    {
-                        "role": "user",
-                        "content": question,
-                    }
-                ],
+                "prompt": prompt,
                 "ability": "math",
                 "reward_model": {"style": "rule", "ground_truth": solution},
                 "extra_info": {

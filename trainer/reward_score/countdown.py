@@ -54,13 +54,12 @@ def evaluate_equation(equation_str):
         return None
 
 
-def compute_score(solution_str, ground_truth, method='strict', format_score=0.1, score=1.):
+def compute_score(solution_str, ground_truth, format_score=0.1, score=1.):
     """The scoring function for countdown task.
     
     Args:
         solution_str: the solution text
         ground_truth: dictionary containing target number and available numbers
-        method: the method to extract the solution
         format_score: the score for correct format but wrong answer
         score: the score for the correct answer
     """
@@ -71,10 +70,11 @@ def compute_score(solution_str, ground_truth, method='strict', format_score=0.1,
     do_print = random.randint(1, 64) == 1
     
     if do_print:
-        print(f"--------------------------------")
+        print(f"===============================")
         print(f"Target: {target} | Numbers: {numbers}")
         print(f"Extracted equation: {equation}")
         print(f"Solution string: {solution_str}")
+        print(f"--------------------------------")
 
     if equation is None:
         if do_print:

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import re
+import random
 import chess
 
 def extract_solution(solution_str):
@@ -54,20 +55,23 @@ def get_score(answer, ground_truth):
         else:
             return 0.1
 
-def compute_score(solution_str, ground_truth, method='strict', format_score=0., score=1.):
-    """The scoring function for GSM8k.
-
-    Reference: Trung, Luong, et al. "Reft: Reasoning with reinforced fine-tuning." Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). 2024.
-
-    Args:
-        solution_str: the solution text
-        ground_truth: the ground truth
-        format_score: the score for the format
-        score: the score for the correct answer
-    """
+def compute_score(solution_str, ground_truth):
+    do_print = random.randint(1, 64) == 1
 
     answer = extract_solution(solution_str=solution_str)
-    return get_score(answer, ground_truth)
+
+    score = get_score(answer, ground_truth)
+
+    if do_print:
+        print(f"===============================")
+        print(f"Puzzle: {ground_truth["puzzle"]} | Best Move: {ground_truth["solution"]}")
+        print(f"Extracted answer: {answer}")
+        print(f"Solution string: {solution_str}")
+        print(f"--------------------------------")
+        print(f"Reward score: {score}")
+
+    return score
+
         
 
 if __name__ == '__main__':
