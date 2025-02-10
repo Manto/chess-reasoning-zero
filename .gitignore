@@ -175,3 +175,6 @@ data/chess/
 data/countdown/
 data/*.csv
 data/*.zst
+
+wandb/
+outputs/
