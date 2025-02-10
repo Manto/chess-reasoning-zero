@@ -16,7 +16,7 @@ def build_prompt(dp):
             "role": "user",
             "content": f"You are a chess grandmaster. For this board configuration in FEN: {puzzle}, calculate the next move that will lead to checkmate, and tell me the move in UCI. Show your work in <think> </think> tags. Show your final answer in <answer> </answer> tag, for example <answer>b3b4</answer>",
         },
-        {"role": "assistant", "content": "Let me solve this step by step."},
+        {"role": "assistant", "content": "Let me solve this step by step. <think>"},
     ]
 
 
