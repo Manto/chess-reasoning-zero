@@ -64,7 +64,7 @@ def compute_score(solution_str, ground_truth):
 
     if do_print:
         print(f"===============================")
-        print(f"Puzzle: {ground_truth["puzzle"]} | Best Move: {ground_truth["solution"]}")
+        print(f"Puzzle: {ground_truth['puzzle']} | Best Move: {ground_truth['solution']}")
         print(f"Extracted answer: {answer}")
         print(f"Solution string: {solution_str}")
         print(f"--------------------------------")
