@@ -38,12 +38,18 @@ def main(engine, model, is_instruct):
         # max_samples=10,
     )
 
+    device = torch.device(
+        "cuda"
+        if torch.cuda.is_available()
+        else "mps" if torch.backends.mps.is_available() else "cpu"
+    )
+
     if engine == "vllm":
         from lighteval.models.vllm.vllm_model import VLLMModelConfig
 
         model_config = VLLMModelConfig(
             pretrained=model,
-            dtype="float16",
+            device=device,
             use_chat_template=not is_instruct,
         )
     elif engine == "transformers":
@@ -51,13 +57,11 @@ def main(engine, model, is_instruct):
             TransformersModelConfig,
         )
 
-        accelerator = Accelerator(device_placement=True,
-                                  mixed_precision='no')
+        accelerator = Accelerator(device_placement=True, mixed_precision="no")
         model_config = TransformersModelConfig(
             accelerator=accelerator,
             pretrained=model,
-            # dtype="float16",
-            device="mps",
+            device=device,
             use_chat_template=not is_instruct,
         )
 
