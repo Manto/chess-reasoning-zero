@@ -54,13 +54,14 @@ def evaluate_equation(equation_str):
         return None
 
 
-def compute_score(solution_str, ground_truth, format_score=0.1, score=1.):
+def compute_score(solution_str, ground_truth, format_score=0.1, wrong_result_score=0.2, score=1.):
     """The scoring function for countdown task.
     
     Args:
         solution_str: the solution text
         ground_truth: dictionary containing target number and available numbers
         format_score: the score for correct format but wrong answer
+        wrong_result_score: has an equation, but wrong answer
         score: the score for the correct answer
     """
     target = ground_truth['target']
@@ -102,7 +103,7 @@ def compute_score(solution_str, ground_truth, format_score=0.1, score=1.):
         else:
             if do_print:
                 print(f"Wrong result: equation = {result}, target = {target}")
-            return format_score
+            return wrong_result_score
     except:
         if do_print:
             print(f"Error evaluating equation")

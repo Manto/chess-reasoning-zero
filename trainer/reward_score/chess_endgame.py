@@ -75,7 +75,10 @@ def compute_score(solution_str, ground_truth):
         
 
 if __name__ == '__main__':
-    # Not a valid format at all
+    # Not a valid format at all - gets 0
+    assert compute_score("Assistant: The answer is blah", {"puzzle": "7k/p4r1p/3p1P2/3P2p1/1P2p3/1PQ5/3K1R1P/1q6 w - - 3 34", "solution": "c3c8"}) == 0
+
+    # Not a valid UCI format - also 0
     assert compute_score("Assistant: The answer is <answer>blah</answer>", {"puzzle": "7k/p4r1p/3p1P2/3P2p1/1P2p3/1PQ5/3K1R1P/1q6 w - - 3 34", "solution": "c3c8"}) == 0
 
     # Could be a move, but not valid on the board

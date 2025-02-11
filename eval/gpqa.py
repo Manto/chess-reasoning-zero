@@ -51,11 +51,13 @@ def main(engine, model, is_instruct):
             TransformersModelConfig,
         )
 
-        accelerator = Accelerator(device_placement=True)
+        accelerator = Accelerator(device_placement=True,
+                                  mixed_precision='no')
         model_config = TransformersModelConfig(
             accelerator=accelerator,
             pretrained=model,
-            dtype="float16",
+            # dtype="float16",
+            device="mps",
             use_chat_template=not is_instruct,
         )
 
